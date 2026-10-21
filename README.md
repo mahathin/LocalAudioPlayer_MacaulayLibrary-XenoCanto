@@ -1,4 +1,4 @@
-# Python script to autoplay bird audio tracks from Macaulay Library and Xeno-Canto
+# Python script to Autoplay Bird Audio Tracks from Macaulay Library and Xeno-Canto
 
 Imagine that you are preparing for a birding trip to a beautiful broadleaf forest (one of my favorite habitats). You would really like to become familiar with a list of vocalizations but do not have enough time to dedicate to listening. Aha! Now you can try to passively learn them anytime your laptop is open!
 
