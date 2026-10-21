@@ -1,14 +1,47 @@
-# Python script to autoplay bird audio tracks from Macaulay Library and XenoCanto
+# Python script to autoplay bird audio tracks from Macaulay Library and Xeno-Canto
 
-If you are a birder, you have likely wished you could listen to species specific bird calls while working. After a bunch of trial-and-error, here is a no application utility that allows you to do sequentially autoplay tracks from Macaulay Library and Xeno-Canto. 
+Imagine that you are preparing for a birding trip to a beautiful broadleaf forest (one of my favorite habitats). You would really like to become familiar with a list of vocalizations but have not enough time to dedicate to listening. AHA! Now you can try to passively learn them anytime your laptop is open! 
 
-This script avoids dealing with web scrapers or API rate limits and instead uses the following workflow: copy the contents of any species or search page from your web browser (Ctrl+A -> Ctrl+C), and then run the script. It extracts the catalog numbers in your search using the markers of "XC..." and "ML..." and plays them using an MPV.
+This is a reasonably light Python utility that allows you to autoplay recordings from Macaulay Library or Xeno Canto (since I have not been able to find an existing utility that does this). I have been able to run this and run relatively heavy image analysis code in parallel. 
 
-The prerequisites for this are to have Python and an MPV player (and install some python packages). I use shinchiro mpv and the script is designed around it, and you may need to modify it based off . And additionally I use a python package, pyperclip to read off the clipboard you copy the page onto. 
+## How it works
+This script does not scrape websites or attempt to automate a browser. It just utilizes your clipboard and the fact that media links have a known form. On your end post setup it works as follows:
+1. Open a ML/XC species or search-results page in your browser. Ensure that it displays as a grid or list (the gallery display will not work)
+2. Copy the page contents:
+   - Press `Ctrl+A` to select all
+   - Press `Ctrl+C` to copy
+3. Run `bird_stream.py` or click on the conveniently setup icon(instructions below).
+4. The script searches your clipboard for:
+   - `ML...`: Macaulay Library recording IDs
+   - `XC...`: Xeno-Canto recording IDs
+5. Matching recordings are added to an mpv playlist and played sequentially
 
-Once you have the bird_stream.py script on your laptop, you will need to change the path to the mpv. Once you do this you should be able to run this locally on your python IDE(my choice is to use Pycharm/Spyder). 
-In principle you can run this from your terminal, I personally find it a nuisance to manually enter the path since we need the clipboard. An alternative is to set up a desktop/taskbar short cut using run_bird_stream.bat file. Here you will need to open this file on notepad and edit the path to the python file and save it. 
+While mpv is open, you can press **`b`** or left-click the player window to open the current recording’s catalogue page in your default browser. Existing keys in the mpv player allow you to switch between recordings. 
 
+## Requirements
+Before using the script, install:
+- [Python 3](https://www.python.org/downloads/)
+- [mpv](https://mpv.io/)
+  - This script was developed with [shinchiro’s Windows builds of mpv](https://github.com/shinchiro/mpv-winbuild-cmake/releases).
+- The Python package `pyperclip`, which allows the script to read clipboard contents
 
-Note: I use the Python Launcher in the bat file via the call "py "C:(yourpath)\bird_stream.py"" if this throws errors after replacing the path, try "python "C:(yourpath)\bird_stream.py"".
+## Setup
+1. Download the files from this repository (or clone the repo)
+2. Locate the mpv installation and copy the path. Open `bird_stream.py` and update MPV_EXE_PATH.
+3. You can now run the `bird_stream.py` from either your chosen python IDE(I like Pycharm and Spyder) or from the terminal using `py "C:\path\to\bird_stream.py"`. If that does not work I would recommend trying `python "C:\path\to\bird_stream.py"`. NOTE: ensure that you replace these dummy paths with the actual path to `bird_stream.py`.
+
+### Setting up a Desktop Shortcut (and Toolbar if you want it)
+1. Locate the downloaded files and copy their paths. Open the `run_bird_stream.bat` file and update the path to the python file path and save it. 
+2. Right click on an empty area of your desktop. Choose New --> Shortcut. Paste or browse to obtain the path to your .bat file and click Next. Give the shortcut a name (it can be absolutely anything). Click Finish and it should be on your Desktop
+3. You can (optionally) change the icon to this shortcut by right clicking on it and picking change icon. There are free sites that will allow you to convert any png to an icon and you again just need the path to your desired icon (or pick from the boring standard options) and click OK
+4. If you wish to have this pinned to your Toolbar, right click on the icon again and go through the full list of options until you stumble on "Pin to Toolbar".
+5. Now its super easy. Simply execute the steps from the How it Works section above. 
+
+## Troubleshooting
+Reiterating some of the issues you may run into:
+1. Ensure the paths are updated in a) the MPV path in the .py file, b) the .py file path in the .bat file, c) the .bat file in the optional icon setup 
+2. The .bat file uses `py "C:\path\to\bird_stream.py"`. If that does not work I would recommend trying `python "C:\path\to\bird_stream.py"`
+3. Clipboard is empty: you need to copy the page before you starting the script/launch the script by clicking on the icon.
+4. No ML/XC streams: If you copy the site from Gallery display instead of grid or list no catalogue numbers get copied and therefore the clipboard has no accessible streams
+
 
